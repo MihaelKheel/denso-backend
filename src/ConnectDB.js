@@ -2,9 +2,6 @@ const DBConfig = require('./services/shared/config-service').getConf('DB')
 
 const mongoose = require('mongoose');
 
-const DB = process.env.MONGO_URI.replace('<PASSWORD>', process.env.DATABASE_PASSWORD)
-console.log(DBConfig.DatabaseUrl)
-
 const connectDB = async () => {
     try{
         const conn = await mongoose.connect(DBConfig.DatabaseUrl);
