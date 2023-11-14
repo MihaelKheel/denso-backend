@@ -9,6 +9,7 @@ const getParts = async (req, res) => {
 
         res.status(SUCCESS.RESPONSE_CODES.C_200).json({
             status: SUCCESS.RESPONSES.RETRIEVAL,
+            length: findParts.length,
             data:{
                 parts: findParts
             },
@@ -24,12 +25,13 @@ const getParts = async (req, res) => {
 const postParts = async (req, res) => {
     try {
         const newParts = await Parts.create(req.body);
+        console.log(req.body)
 
         res.status(SUCCESS.RESPONSE_CODES.C_201).json({
             status: SUCCESS.RESPONSES.CREATE,
             data: {
                 parts: newParts._id,
-            },
+            },  
         })
     } catch (error) {
         res.status(SUCCESS.RESPONSE_CODES.C_404).json({
@@ -41,8 +43,8 @@ const postParts = async (req, res) => {
 
 const deleteParts = async (req, res) => {
     try {
-        await Parts.findByIdAndDelete(req.params.id);
-
+        // await Parts.findByIdAndDelete(req.params.id);
+        await Parts.deleteMany({  })
         res.status(204).json({
             status: SUCCESS.RESPONSES.DELETE,
             data: null
