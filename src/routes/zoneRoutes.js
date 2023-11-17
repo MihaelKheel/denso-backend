@@ -8,7 +8,7 @@ router.get("/", getZone)
 
 router.post("/", postZone)
 
-router.patch("/:id", updateZone);
+router.put("/:id", updateZone);
 
 router.delete("/:id", deleteZone);
 

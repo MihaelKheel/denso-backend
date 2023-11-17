@@ -1,17 +1,17 @@
-const Tags = require('../model/tagsSchema.js')
+const Groups = require('../model/groupsSchema.js')
 
 const { ERROR } = require('../constants/shared/error')
 const { SUCCESS } = require('../constants/shared/success')
 
-const getTags = async (req, res) => {
+const getGroups = async (req, res) => {
     try {
-        const findTags = await Tags.find();
+        const findGroups = await Groups.find();
 
         res.status(SUCCESS.RESPONSE_CODES.C_200).json({
             status: SUCCESS.RESPONSES.RETRIEVAL,
-            length: findTags.length,
+            length: findGroups.length,
             data:{
-                tags: findTags
+                groups: findGroups
             },
         })
     } catch (error) {
@@ -22,32 +22,16 @@ const getTags = async (req, res) => {
     }
 }
 
-const deleteTags = async (req, res) => {
+const postGroups = async (req, res) => {
     try {
-        await Tags.findByIdAndDelete(req.params.id);
-        // await Parts.deleteMany({  })
-        res.status(204).json({
-            status: SUCCESS.RESPONSES.DELETE,
-            data: null
-        })
-    } catch (error) {
-        res.status(404).json({
-            status: ERROR.RESPONSES.API_ERROR_404,
-            message: error  .message
-        })
-    }
-}
-
-const postTags = async (req, res) => {
-    try {
-        const newTags = await Tags.create(req.body);
+        const newGroups = await Groups.create(req.body);
         console.log(req.body)
 
         res.status(SUCCESS.RESPONSE_CODES.C_201).json({
             status: SUCCESS.RESPONSES.CREATE,
             data: {
-                Tags: newTags._id,
-            },  
+                groups: newGroups._id,
+            },
         })
     } catch (error) {
         res.status(SUCCESS.RESPONSE_CODES.C_404).json({
@@ -57,12 +41,12 @@ const postTags = async (req, res) => {
     }
 }
 
-const updateTags = async (req, res) => {
+const updateGroups = async (req, res) => {
     const id = req.params.id;
     const updatedData  = req.body;
 
     try{
-        const tags = await Tags.findByIdAndUpdate(id, updatedData, {
+        const groups = await Groups.findByIdAndUpdate(id, updatedData, {
             new: true,
             runValidators: true,
         })
@@ -70,7 +54,7 @@ const updateTags = async (req, res) => {
         res.status(200).json({
             status: SUCCESS.RESPONSES.UPDATE,
             data: {
-                tags
+                groups
             }
         });
     }catch (err){
@@ -82,8 +66,7 @@ const updateTags = async (req, res) => {
 };
 
 module.exports = {
-    getTags,
-    postTags,
-    updateTags,
-    deleteTags
+    getGroups,
+    postGroups,
+    updateGroups
 };

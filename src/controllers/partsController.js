@@ -43,8 +43,9 @@ const postParts = async (req, res) => {
 
 const deleteParts = async (req, res) => {
     try {
-        // await Parts.findByIdAndDelete(req.params.id);
-        await Parts.deleteMany({  })
+        await Parts.findByIdAndDelete(req.params.id);
+        console.log(req.params.id)
+        // await Parts.deleteMany({  })
         res.status(204).json({
             status: SUCCESS.RESPONSES.DELETE,
             data: null
@@ -57,8 +58,33 @@ const deleteParts = async (req, res) => {
     }
 }
 
+const updateParts = async (req, res) => {
+    const id = req.params.id;
+    const updatedData  = req.body;
+
+    try{
+        const parts = await Parts.findByIdAndUpdate(id, updatedData, {
+            new: true,
+            runValidators: true,
+        })
+
+        res.status(200).json({
+            status: SUCCESS.RESPONSES.UPDATE,
+            data: {
+                parts
+            }
+        });
+    }catch (err){
+        res.status(404).json({
+            status: ERROR.API_ERROR_404,
+            message: err.message,
+        });
+    };
+};
+
 module.exports = {
     getParts,
     postParts,
-    deleteParts
+    deleteParts,
+    updateParts
 };

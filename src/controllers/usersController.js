@@ -25,7 +25,6 @@ const getUsers = async (req, res) => {
 const postUsers = async (req, res) => {
     try {
         const newUsers = await Users.create(req.body);
-        console.log(req.body)
 
         res.status(SUCCESS.RESPONSE_CODES.C_201).json({
             status: SUCCESS.RESPONSES.CREATE,
@@ -42,19 +41,13 @@ const postUsers = async (req, res) => {
 }
 
 const updateUsers = async (req, res) => {
-    const id = req.params.id;
-    const updatedData  = req.body;
-
     try{
-        const zone = await Zone.findByIdAndUpdate(id, updatedData, {
-            new: true,
-            runValidators: true,
-        })
+        const user = await Users.findByIdAndUpdate(req.params.id)
 
         res.status(200).json({
             status: SUCCESS.RESPONSES.UPDATE,
             data: {
-                zone
+                user
             }
         });
     }catch (err){

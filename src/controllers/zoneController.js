@@ -22,22 +22,6 @@ const getZone = async (req, res) => {
     }
 }
 
-const deleteZone = async (req, res) => {
-    try {
-        await Zone.findByIdAndDelete(req.params.id);
-        // await Parts.deleteMany({  })
-        res.status(204).json({
-            status: SUCCESS.RESPONSES.DELETE,
-            data: null
-        })
-    } catch (error) {
-        res.status(404).json({
-            status: ERROR.RESPONSES.API_ERROR_404,
-            message: error  .message
-        })
-    }
-}
-
 const postZone = async (req, res) => {
     try {
         const newZone = await Zone.create(req.body);
@@ -81,6 +65,21 @@ const updateZone = async (req, res) => {
     };
 };
 
+
+const deleteZone = async (req, res) => {
+    try {
+        await Zone.findByIdAndDelete(req.params.id);
+        res.status(204).json({
+            status: SUCCESS.RESPONSES.DELETE,
+            data: null
+        })
+    } catch (error) {
+        res.status(404).json({
+            status: ERROR.RESPONSES.API_ERROR_404,
+            message: error  .message
+        })
+    }
+}
 
 module.exports = {
     getZone,
